@@ -1,0 +1,14 @@
+Flask==2.1.1
+mitmproxy
+flask_sqlalchemy
+flask-marshmallow
+marshmallow-sqlalchemy
+sqlalchemy
+marshmallow
+flask_cors
+flask-restx
+flask_apscheduler
+APScheduler
+python-dotenv
+gunicorn
+python-iptables

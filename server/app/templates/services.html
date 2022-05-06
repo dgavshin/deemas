@@ -1,0 +1,80 @@
+<html lang="ru">
+
+<head>
+    <title>Deemas</title>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        .error-status {
+            background-color: rgba(255, 14, 0, 0.35);
+        }
+
+        .success-status {
+            background-color: rgba(56, 250, 111, 0.27);
+        }
+
+        .status {
+            margin: 20px 0 20px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container row-cols-3">
+    <form id="create" action="/api/services">
+        <div class="container row-cols-3 status success-status" hidden>qwdqwd</div>
+        <div class="form-group">
+            <label for="name">Название сервиса</label>
+            <input name="name" type="text" class="form-control" id="name"
+                   placeholder="Enter service name">
+        </div>
+        <div class="form-group">
+            <label for="port">Порт сервиса</label>
+            <input name="port" type="number" class="form-control" id="port"
+                   placeholder="Enter service port">
+        </div>
+        <div class="form-group">
+            <label for="proxy_port">Порт куда проксить</label>
+            <input name="proxy_port" type="number" class="form-control" id="proxy_port"
+                   placeholder="Enter proxy port">
+        </div>
+        <div class="form-group">
+            <label for="proxy_host">Хост куда проксить</label>
+            <input name="proxy_host" type="text" class="form-control" id="proxy_host"
+                   placeholder="localhost">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script>
+    $("#create").submit(function (event) {
+
+        event.preventDefault();
+
+        const form = $(this)
+        const formData = form.serializeArray();
+        const actionUrl = form.attr('action');
+        const jsonData = {};
+
+        $.each(formData, function () {
+            jsonData[this.name] = this.value;
+        });
+
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: JSON.stringify(jsonData),
+            success: function () {
+                alert("ura!")
+            },
+            dataType: "json",
+            contentType: "application/json"
+        });
+    });
+</script>
+</body>
+</html>
+

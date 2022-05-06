@@ -1,0 +1,10 @@
+.idea
+proxy/__pycache__/
+**/__pycache__/*
+venv
+venv_39
+/logs/*.logs
+/logs/*.log
+/proxy.db
+./start_server.sh
+/.local_env

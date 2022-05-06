@@ -1,0 +1,21 @@
+### Send request with dynamic variables in request"s body
+POST http://127.0.0.1:5000/api/services
+Content-Type: application/json
+Authorization: Basic YWRtaW46ZGVmYXVsdF90b2tlbg==
+
+{
+  "name": "test",
+  "protocol": "HTTP",
+  "port": "8080",
+  "proxy_port": "8082",
+  "proxy_host": "127.0.0.1",
+  "lang": "python"
+}
+
+###
+GET http://127.0.0.1:5000/api/services
+Authorization: Basic YWRtaW46ZGVmYXVsdF90b2tlbg==
+
+###
+GET http://127.0.0.1:5000/api/services/hello
+Authorization: Basic YWRtaW46ZGVmYXVsdF90b2tlbg==
