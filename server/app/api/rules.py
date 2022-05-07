@@ -10,7 +10,7 @@ from server.app import conditions_ns, scripts_ns, app
 from server.app import db, condition_rules_schema, script_rule_swag, response_swag, condition_rule_options_swag
 from server.app import script_rules_schema
 from server.app.errorhandler import ResponseEntity
-from server.app.models import Service, ScriptRule, ActionType
+from server.app.models import Service, ScriptRule, ActionType, BooleanOperator
 from server.app.swagger import condition_rule_swag
 
 
@@ -38,10 +38,17 @@ def add_default_script_rules(service: Service):
     for file in files:
         with open(file, "r") as f:
             _, action_type, script_name = file.name[:-3].split("_", 2)
-            service.script_rules.append(
-                ScriptRule(name=script_name, service_name=service.name, service=service, order=curr_order,
-                           enabled=True, protocol=service.protocol, script=f.read(), boolean_operator="AND",
-                           action_type=ActionType[action_type.upper()]))
+            script_rule = ScriptRule()
+            script_rule.service = service
+            script_rule.script = f.read()
+            script_rule.name = script_name
+            script_rule.protocol = service.protocol
+            script_rule.order = curr_order
+            script_rule.action_type = ActionType[action_type.upper()]
+            script_rule.boolean_operator = BooleanOperator.AND
+            script_rule.enabled = True
+            script_rule.service_name = service.name
+            service.script_rules.append(script_rule)
             curr_order += 1
     return None
 

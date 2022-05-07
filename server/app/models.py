@@ -33,8 +33,9 @@ class Service(db.Model):
     proxy_enabled = db.Column(db.Boolean, default=False)
     protocol: Protocol = db.Column(db.Enum(Protocol), nullable=False)
     rule_operator: BooleanOperator = db.Column(db.Enum(BooleanOperator), default=BooleanOperator.OR)
-    condition_rules: List["ConditionRule"] = db.relationship("ConditionRule", back_populates="service")
-    script_rules: List["ScriptRule"] = db.relationship("ScriptRule", back_populates="service")
+    condition_rules: List["ConditionRule"] = db.relationship("ConditionRule", back_populates="service",
+                                                             cascade="all, delete")
+    script_rules: List["ScriptRule"] = db.relationship("ScriptRule", back_populates="service", cascade="all, delete")
 
     def update(self, service):
         for col_name in self.__table__.columns.keys():
@@ -74,7 +75,8 @@ class ConditionRule(db.Model):
 class ScriptRule(db.Model):
     __tablename__ = "script_rules"
 
-    name = db.Column(db.String, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
     service_name = db.Column(db.String, db.ForeignKey('services.name'))
     service: Service = db.relationship("Service", back_populates="script_rules")
 
