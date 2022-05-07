@@ -1,7 +1,7 @@
 import config
 
 
-def substitute(message: bytes, alp: bytes, key: bytes, skip: bytes = None) -> list:
+def substitute(message: bytes, alp: bytes, key: bytes, skip: bytes = ()) -> list:
     """
     Шифр простой замены
 
