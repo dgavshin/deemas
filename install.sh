@@ -20,7 +20,7 @@ function install_iptables() {
 echo "[+] Python virtual environment installation..."
 python3 -m venv venv
 . ./venv/bin/activate
-
+python3 -m pip install -r requirements.txt
 
 if compgen -G "$XTABLES_LIBDIR" 2>/dev/null; then
   pass
