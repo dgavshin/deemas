@@ -35,12 +35,12 @@ class Windows(Config):
 
 
 class Production(Config):
-    ENABLE_IPTABLES_MANAGEMENT = True
+    ENABLE_IPTABLES_MANAGEMENT = False
     SQLALCHEMY_DATABASE_URI = "sqlite:///../../proxy.db"
 
 
 class Testing(Config):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_DATABASE_URI = "sqlite:///../../proxy.db"
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     ENABLE_IPTABLES_MANAGEMENT = False
     TESTING = True
