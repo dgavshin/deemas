@@ -49,12 +49,13 @@ class SubstitutionEncryptor(Encryptor):
         super(SubstitutionEncryptor, self).__init__("substitution", params)
         self.alphabet = self.params.get("alphabet")
         self.key = self.params.get("key")
+        self.skip = self.params.get("skip")
 
     def encrypt(self, message: bytes) -> bytes:
-        return bytes(substitute(message, self.alphabet, self.key))
+        return bytes(substitute(message, self.alphabet, self.key, skip=self.skip))
 
     def decrypt(self, message: bytes) -> bytes:
-        return bytes(substitute(message, self.key, self.alphabet))
+        return bytes(substitute(message, self.key, self.alphabet, skip=self.skip))
 
 
 def get_encryptor() -> Encryptor:

@@ -19,7 +19,7 @@ ENCRYPTION_MODE = {
     "params": {
         "skip": b"=",
         "alphabet": (string.ascii_uppercase + string.digits).encode(),
-        "key": bytes(random.sample((string.ascii_uppercase + string.digits).encode(), k=FLAG_LEN))}
+        "key": bytes(random.sample((string.ascii_uppercase + string.digits).encode(), k=36))}
 }
 
 # Нейминг файлов с проверками:

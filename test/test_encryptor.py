@@ -4,7 +4,8 @@ from string import ascii_letters
 from unittest import TestCase, main
 from unittest.mock import MagicMock, call
 
-from server import Encryptor, encrypt_flags, decrypt_flags, get_encryptor, config
+from proxy.crypto import Encryptor, encrypt_flags, decrypt_flags, get_encryptor
+import proxy.config as config
 
 
 def init_encryptor() -> Encryptor:
