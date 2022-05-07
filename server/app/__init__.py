@@ -29,13 +29,12 @@ def create_table():
     db.create_all()
 
 
-# Swagger configuration
-api = Api(app, doc='/docs', title='Deemas', description='Proxy manager for Attack&Defence')
+api = Api(app, doc='/docs', title='Deemas', description='Proxy manager for Attack&Defence', prefix="/api")
 services_ns = api.namespace('services', description='Services')
-scripts_ns = api.namespace('rules/scripts', description='Scripts')
-conditions_ns = api.namespace('rules/conditions', description='Conditions')
+scripts_ns = api.namespace('scripts', description='Scripts')
+conditions_ns = api.namespace('conditions', description='Conditions')
 proxy_ns = api.namespace('services/proxy', description='Proxy for services')
-iptables_ns = api.namespace('services/iptables', description='Iptables rules for proxy and services')
+iptables_ns = api.namespace('services/iptables', description='Iptables default for proxy and services')
 
 # Create marshmallow schemes
 from server.app.models import *
@@ -52,6 +51,9 @@ condition_rules_schema = ConditionRuleSchema(many=True, exclude=("protocol",))
 # Create log dir if not exists
 app.config["LOG_DIR"].mkdir(parents=True, exist_ok=True)
 
+if app.config["ENABLE_IPTABLES_MANAGEMENT"]:
+    from server.app.api.iptables import *
+
 from server.app.swagger import *
 from server.app.errorhandler import *
 from server.app.views import *
@@ -59,6 +61,4 @@ from server.app.api.services import *
 from server.app.api.proxy import *
 from server.app.api.rules import *
 from server.app.proxyhandler import update_state
-
-if app.config["ENABLE_IPTABLES_MANAGEMENT"]:
-    from server.app.api.iptables import *
+from server.app.auth import auth_required

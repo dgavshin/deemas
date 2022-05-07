@@ -15,10 +15,13 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PROXY_ADDONS = {"http": Path("proxy/httpaddon.py"), "tcp": Path("proxy/tcpaddon.py")}
     LOG_DIR = Path("./logs")
-    ENABLE_IPTABLES_MANAGEMENT = True
     SYSTEM_ROOT = "/"
 
+    DEFAULT_RULES_DIR = Path("server/app/static/defaultrules")
+
     API_TOKEN = getenv("API_TOKEN")
+    API_HEADER = 'X_API_KEY'
+
     INTERFACE = getenv("INTERFACE")
     MITMDUMP_EXECUTABLE = getenv("MITMDUMP_EXECUTABLE", "./venv/bin/mitmdump")
 
@@ -32,11 +35,13 @@ class Windows(Config):
 
 
 class Production(Config):
+    ENABLE_IPTABLES_MANAGEMENT = False
     SQLALCHEMY_DATABASE_URI = "sqlite:///../../proxy.db"
 
 
 class Testing(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    ENABLE_IPTABLES_MANAGEMENT = False
     TESTING = True
     LOG_LEVEL = logging.DEBUG

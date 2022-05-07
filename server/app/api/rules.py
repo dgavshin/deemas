@@ -1,15 +1,16 @@
 from http import HTTPStatus
 
 from flask import request, json
+from pathlib import Path
 from flask_restx import Resource
 from werkzeug.exceptions import NotFound, BadRequest
 
 from proxy.conditions import protocol_conditions
-from server.app import conditions_ns, scripts_ns
+from server.app import conditions_ns, scripts_ns, app
 from server.app import db, condition_rules_schema, script_rule_swag, response_swag, condition_rule_options_swag
 from server.app import script_rules_schema
 from server.app.errorhandler import ResponseEntity
-from server.app.models import Service
+from server.app.models import Service, ScriptRule, ActionType
 from server.app.swagger import condition_rule_swag
 
 
@@ -24,6 +25,25 @@ def update_rules(service_name: str, data, schema):
     for rule in rules:
         rule.protocol = service.protocol
     return service, rules
+
+
+def add_default_script_rules(service: Service):
+    rules_dir: Path = app.config["DEFAULT_RULES_DIR"]
+    files = rules_dir.glob(f"{service.protocol.lower()}_*_*.py")
+    if not service.script_rules:
+        curr_order = 0
+        service.script_rules = list()
+    else:
+        curr_order = max(service.script_rules, key=lambda x: x.order)
+    for file in files:
+        with open(file, "r") as f:
+            _, action_type, script_name = file.name[:-3].split("_", 2)
+            service.script_rules.append(
+                ScriptRule(name=script_name, service_name=service.name, service=service, order=curr_order,
+                           enabled=True, protocol=service.protocol, script=f.read(), boolean_operator="AND",
+                           action_type=ActionType[action_type.upper()]))
+            curr_order += 1
+    return None
 
 
 @conditions_ns.route("/<string:service_name>")
@@ -98,4 +118,3 @@ class ConditionRuleUtils(Resource):
         if cond is None:
             raise NotFound(f"Не удалось найти условия для протокола {protocol}")
         return [cond[x].serialize(x) for x in cond.keys()]
-

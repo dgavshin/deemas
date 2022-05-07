@@ -3,6 +3,7 @@ from http import HTTPStatus
 from flask import request, json
 from flask_restx import Resource
 from werkzeug.exceptions import NotFound, BadRequest
+from server.app.api.rules import add_default_script_rules
 
 from server.app import db, services_schema, service_schema, services_ns
 from server.app.errorhandler import ResponseEntity
@@ -32,6 +33,7 @@ class ServiceListResource(Resource):
             raise BadRequest(f"Сервис с таким именем уже создан")
 
         service = service_schema.loads(request.data)
+        add_default_script_rules(service)
         db.session.add(service)
         db.session.commit()
         return ResponseEntity(HTTPStatus.CREATED, f"Сервис {service.name} успешно создан")

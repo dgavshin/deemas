@@ -1,11 +1,12 @@
-Flask==2.1.1
-mitmproxy
+Flask==2.0.1
+mitmproxy==8.0.0
 flask_sqlalchemy
 flask-marshmallow
 marshmallow-sqlalchemy
 sqlalchemy
 marshmallow
 flask_cors
+colorama
 flask-restx
 flask_apscheduler
 APScheduler

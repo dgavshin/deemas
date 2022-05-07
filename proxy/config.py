@@ -22,9 +22,6 @@ ENCRYPTION_MODE = {
         "key": bytes(random.sample((string.ascii_uppercase + string.digits).encode(), k=FLAG_LEN))}
 }
 
-# Путь до папки с правилами
-RULE_PATH = "./proxy/rules"
-
 # Нейминг файлов с проверками:
 # rule_{protocol}_{request | response}_rule_name.py
 # Пример: http_decrypt_flag_count.py

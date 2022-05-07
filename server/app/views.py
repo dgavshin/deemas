@@ -2,7 +2,6 @@ from flask import jsonify, request
 from flask import render_template
 
 from server.app import app
-from server.app import auth
 
 
 @app.route("/")
@@ -26,12 +25,10 @@ def put_flag():
 
 
 @app.route('/services', methods=["GET"])
-@auth.auth_required
 def services():
     return render_template("services.html")
 
 
 @app.route('/rules', methods=["GET"])
-@auth.auth_required
 def rules():
     return render_template("rules.html")

@@ -12,14 +12,11 @@ def authenticate():
         {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
 
-def auth_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        auth = request.authorization
-        if auth is None or auth.password != app.config["API_TOKEN"]:
-            return authenticate()
-        return f(*args, **kwargs)
-    return decorated
+@app.before_request
+def auth_required():
+    auth = request.authorization
+    if auth is None or auth.password != app.config["API_TOKEN"]:
+        return authenticate()
 
 
 def api_auth_required(f):
@@ -28,5 +25,5 @@ def api_auth_required(f):
         if request.headers.get('X-Token', '') != app.config["API_TOKEN"]:
             return Response('Provided token is invalid.', 403)
         return f(*args, **kwargs)
-    return decorated
 
+    return decorated

@@ -2,7 +2,7 @@ import re
 
 from mitmproxy.tcp import TCPFlow
 
-from proxy.config import FLAG_FORMAT, ALLOWABLE_FLAG_COUNT
+from config import FLAG_FORMAT, ALLOWABLE_FLAG_COUNT
 
 
 def check(flow: TCPFlow) -> bool:
