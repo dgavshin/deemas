@@ -35,7 +35,7 @@ class Windows(Config):
 
 
 class Production(Config):
-    ENABLE_IPTABLES_MANAGEMENT = False
+    ENABLE_IPTABLES_MANAGEMENT = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///../../proxy.db"
 
 
