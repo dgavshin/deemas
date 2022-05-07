@@ -39,14 +39,17 @@ def log_deemas_preview():
 
 
 def configure_logging(logfile: Path):
-    logfile.unlink(missing_ok=True)
-    logging.getLogger().setLevel(LOG_LEVEL)
-    root = logging.getLogger()
-    h = RotatingFileHandler(filename=logfile, mode='w', maxBytes=MAX_LOG_BYTES)
-    f = logging.Formatter('%(asctime)s %(processName)-10s %(levelname)-5s --- %(message)s')
-    h.setFormatter(f)
-    root.addHandler(h)
-    log_deemas_preview()
+    """
+        logfile.unlink(missing_ok=True)
+        logging.getLogger().setLevel(LOG_LEVEL)
+        root = logging.getLogger()
+        h = RotatingFileHandler(filename=logfile, mode='w', maxBytes=MAX_LOG_BYTES)
+        f = logging.Formatter('%(asctime)s %(processName)-10s %(levelname)-5s --- %(message)s')
+        h.setFormatter(f)
+        root.addHandler(h)
+        log_deemas_preview()
+    """
+    return
 
 
 log: "FormatLog" = FormatLog()

@@ -29,7 +29,7 @@ class HTTPProxyProcess(ProxyProcess):
             "-s", str(app.config["PROXY_ADDONS"]["http"]),
             "-p", str(service.port),
             "--set", "block_global=false",
-            "--verbose"
+            "-q"
         ]
         super(HTTPProxyProcess, self).__init__(service=service, process_args=http_proxy_args)
 
