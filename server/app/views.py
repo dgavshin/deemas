@@ -1,27 +1,11 @@
-from flask import jsonify, request
-from flask import render_template
+from flask import render_template, redirect
 
 from server.app import app
 
 
 @app.route("/")
 def hello():
-    return "hello!"
-
-
-flags = []
-
-
-@app.route("/flags")
-def get_flag():
-    return jsonify(flags=flags)
-
-
-@app.route("/flags", methods=["POST"])
-def put_flag():
-    flag = request.json["flag"]
-    flags.append(flag)
-    return flag
+    return redirect('/docs')
 
 
 @app.route('/services', methods=["GET"])
