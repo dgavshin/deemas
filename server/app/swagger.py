@@ -1,8 +1,8 @@
 from flask_restx import fields
 
-from server.app import api
+from server.app import restx
 
-service_swag_read = api.model('ServiceResponse', {
+service_swag_read = restx.model('ServiceResponse', {
     'name': fields.String(required=True, description='Название сервиса'),
     'lang': fields.String(required=True, description='Язык программирования сервиса'),
     'port': fields.Integer(required=True, description='Порт прокси'),
@@ -13,7 +13,7 @@ service_swag_read = api.model('ServiceResponse', {
                                    description='Булевый оператор между скриптовыми и условными правилами')
 })
 
-service_swag_create = api.model('CreateServiceRequest', {
+service_swag_create = restx.model('CreateServiceRequest', {
     'name': fields.String(required=True, description='Название сервиса'),
     'lang': fields.String(required=True, description='Язык программирования сервиса'),
     'port': fields.Integer(required=True, description='Порт сервиса'),
@@ -24,7 +24,7 @@ service_swag_create = api.model('CreateServiceRequest', {
                                    description='Булевый оператор между скриптовыми и условными правилами')
 })
 
-service_swag_update = api.model('UpdateServiceRequest', {
+service_swag_update = restx.model('UpdateServiceRequest', {
     'lang': fields.String(required=True, description='Язык программирования сервиса'),
     'port': fields.Integer(required=True, description='Порт сервиса'),
     'proxy_port': fields.Integer(required=True, description='Прокси порт сервиса'),
@@ -34,7 +34,7 @@ service_swag_update = api.model('UpdateServiceRequest', {
                                    description='Булевый оператор между скриптовыми и условными правилами')
 })
 
-condition_rule_swag = api.model("ConditionRule", {
+condition_rule_swag = restx.model("ConditionRule", {
     "id": fields.Integer(required=False, description="Идентификатор правила"),
     "order": fields.Integer(required=True, description="Порядок правила"),
     "enabled": fields.Boolean(required=True, description="Включено ли правило"),
@@ -46,7 +46,7 @@ condition_rule_swag = api.model("ConditionRule", {
     "action_type": fields.String(enum=["ENCRYPT", "DECRYPT"], required=True, description="Тип действия")
 })
 
-script_rule_swag = api.model("ScriptRule", {
+script_rule_swag = restx.model("ScriptRule", {
     "name": fields.String(required=True, description="Идентификатор правила"),
     "order": fields.Integer(required=True, description="Порядок правила"),
     "enabled": fields.Boolean(required=True, description="Включено ли правило"),
@@ -55,17 +55,17 @@ script_rule_swag = api.model("ScriptRule", {
     "action_type": fields.String(enum=["ENCRYPT", "DECRYPT"], required=True, description="Тип действия")
 })
 
-response_swag = api.model("ResponseEntity", {
+response_swag = restx.model("ResponseEntity", {
     "code": fields.String(description="Код ответа"),
     "description": fields.String(description="Описание ответа"),
     "level": fields.String(enum=["info", "error", "warn"], description="Уровень логирования")
 })
 
-status_swag = api.model("Status", {
+status_swag = restx.model("Status", {
     "enabled": fields.Boolean(description="Статус")
 })
 
-condition_rule_options_swag = api.model("ConditionOptions", {
+condition_rule_options_swag = restx.model("ConditionOptions", {
     "match_type": fields.String(description="Название поля для сравнения"),
     "match_relationships": fields.List(fields.String, description="Возможные типы сравнений между объектами"),
     "match_sides": fields.List(fields.String, description="Контекст для сравнения")

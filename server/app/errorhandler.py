@@ -3,7 +3,7 @@ import traceback
 from flask import Response, json
 from werkzeug.exceptions import HTTPException
 
-from server.app import api
+from server.app import restx
 
 
 class ValidationError(Exception):
@@ -24,7 +24,7 @@ def handle_http_exception(e):
     return ResponseEntity(e.code, e.description, level="error")
 
 
-@api.errorhandler(Exception)
+@restx.errorhandler(Exception)
 def handle_exception(e: Exception):
     traceback.print_exc()
     code = e.code if isinstance(e, HTTPException) else 500
