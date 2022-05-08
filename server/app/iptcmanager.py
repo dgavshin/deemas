@@ -1,5 +1,6 @@
 import iptc
 
+from server.app import app
 from server.app.models import Service
 
 chain = iptc.Chain(iptc.Table(iptc.Table.NAT), "PREROUTING")
@@ -33,6 +34,7 @@ def delete_redirect_rule(service: Service) -> None:
 def create_redirect_rule(service: Service) -> iptc.Rule:
     rule = iptc.Rule()
     rule.protocol = 'tcp'
+    rule.in_interface = app.config["INTERFACE"]
     rule.dport = str(service.proxy_port)
     rule.target = iptc.Target(rule, 'REDIRECT')
     rule.target.to_ports = str(service.port)

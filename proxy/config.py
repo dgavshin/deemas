@@ -6,18 +6,17 @@ from re import compile
 import string
 
 # Формат флага
-FLAG_FORMAT = compile(rb"([A-Z0-9]{31}=)")
-FLAG_LEN = 32
+FLAG_FORMAT = compile(rb"(InnoCTF\{[A-Z0-9]{31}\})")
+FLAG_LEN = 40
 # Формат флага в зашифрованном виде
-ENCRYPTED_FLAG_FORMAT = compile(rb"([A-Z0-9]{31}=)")
-ENCRYPTED_FLAG_LEN = 32
+ENCRYPTED_FLAG_FORMAT = compile(rb"(InnoCTF\{[A-Z0-9]{31}\})")
+ENCRYPTED_FLAG_LEN = 40
 
 # Метод шифрования и его параметры
-#
 ENCRYPTION_MODE = {
     "name": "substitution",
     "params": {
-        "skip": b"=",
+        "skip": b"InnoCTF{}",
         "alphabet": (string.ascii_uppercase + string.digits).encode(),
         "key": bytes(random.sample((string.ascii_uppercase + string.digits).encode(), k=36))}
 }
@@ -27,7 +26,7 @@ ENCRYPTION_MODE = {
 # Пример: http_decrypt_flag_count.py
 RULE_NAMING = "%s_%s_%s.py"
 
-ALLOWABLE_FLAG_COUNT = 3
+ALLOWABLE_FLAG_COUNT = 5
 
 # Название переменной окружения, в которой записаны правила,
 # запрещенные к выполнению
